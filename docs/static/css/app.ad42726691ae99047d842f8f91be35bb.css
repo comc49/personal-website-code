@@ -1,0 +1,2 @@
+#app{font-family:Avenir,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:#2c3e50;display:grid;grid:[row1-start] "header header header" 1fr [row1-end] [row2-start] "main main main" [row2-end] [row3-start] "footer footer footer" 25px [row3-end]/auto 50% auto}.navbar{grid-area:header}.homepage{grid-area:main}
+/*# sourceMappingURL=app.ad42726691ae99047d842f8f91be35bb.css.map */
