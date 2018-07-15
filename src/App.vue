@@ -25,7 +25,6 @@ export default {
   display: grid;
   grid: [row1-start] "header header header" 1fr [row1-end]
       [row2-start] "main main main" [row2-end]
-      [row3-start] "footer footer footer" 25px [row3-end]
       / auto 50% auto;
 }
 * {
