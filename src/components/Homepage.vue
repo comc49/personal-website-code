@@ -14,7 +14,6 @@
     <section class="homepage--about hp-section">
       <section
         class="text-section homepage--about--texts"
-        v-bind:class="{ 'fade-in': viewIndexArr[1] === 1 }"
       >
         <div class="title">
           <h1 class="section-name">ABOUT</h1>
