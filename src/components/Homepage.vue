@@ -1,7 +1,9 @@
 <template>
   <section class="homepage">
     <section class="homepage--landing hp-section">
-      <section class="homepage--landing--texts fade-in">
+      <section
+        class="homepage--landing--texts fade-in"
+      >
         <h2 class="name left-pad">Brian Koo</h2>
         <h1 class="position-title left-pad">FRONT-END DEVELOPER</h1>
         <p class="description left-pad">
@@ -10,7 +12,10 @@
       </section>
     </section>
     <section class="homepage--about hp-section">
-      <section class="text-section homepage--about--texts fade-in">
+      <section
+        class="text-section homepage--about--texts"
+        v-bind:class="{ 'fade-in': viewIndexArr[1] === 1 }"
+      >
         <div class="title">
           <h1 class="section-name">ABOUT</h1>
           <i class="material-icons title-icon">person</i>
@@ -25,13 +30,16 @@
           </p>
           <p class="about-text2">
             As a front-end developer with a computer science degree,
-            I write code that conforms to the industry standards and follows the best practices for performance.
+            I write code that conforms to the industry standards and follows
+             the best practices for performance.
           </p>
         </div>
       </section>
     </section>
     <section class="homepage--experience hp-section">
-      <section class="text-section homepage--experience--texts fade-in">
+      <section
+        class="text-section homepage--experience--texts"
+      >
         <div class="title">
           <h1 class="section-name">EXPERIENCE</h1>
           <i class="material-icons title-icon">list_alt</i>
@@ -59,7 +67,9 @@
       </section>
     </section>
     <section class="homepage--skillset hp-section">
-      <section class="text-section homepage--skillset--texts fade-in">
+      <section
+        class="text-section homepage--skillset--texts"
+      >
         <div class="title">
           <h1 class="section-name blue">SKILLSET</h1>
           <i class="material-icons title-icon blue">create</i>
@@ -79,7 +89,9 @@
       </section>
     </section>
     <section class="homepage--education hp-section">
-      <section class="text-section homepage--education--texts fade-in">
+      <section
+        class="text-section homepage--education--texts"
+      >
         <div class="title">
           <h1 class="section-name">EDUCATION</h1>
           <i class="material-icons title-icon">school</i>
@@ -100,7 +112,9 @@
       </section>
     </section> -->
     <section class="homepage--social-media hp-section blue">
-      <section class="text-section homepage--social-media--texts fade-in">
+      <section
+        class="text-section homepage--social-media--texts"
+      >
         <div class="title">
           <h1 class="section-name">HIT ME UP!</h1>
           <i class="material-icons title-icon contact-icon">contact_mail</i>
@@ -126,8 +140,42 @@ export default {
   name: 'Homepage',
   data() {
     return {
-      test: 'test',
+      optionsList: [
+        'homepage--landing',
+        'homepage--about',
+        'homepage--experience',
+        'homepage--skillset',
+        'homepage--education',
+        'homepage--social-media',
+      ],
+      viewIndexArr: [0, 0, 0, 0, 0, 0],
     };
+  },
+  mounted() {
+    const threshold = [];
+    for (let i = 0; i <= 1; i += 0.25) {
+      threshold.push(Number(i).toFixed(2));
+    }
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold,
+    };
+    // const observer = new IntersectionObserver(this.setIndex, options);
+    this.optionsList.map((val, i) =>
+      new IntersectionObserver(this.setIndex, options)
+        .observe(document.querySelector(`.${this.optionsList[i]}`)),
+    );
+  },
+  methods: {
+    setIndex(entry) {
+      if (entry.length === 1) {
+        const el = entry[0].target.firstChild;
+        if (!el.className.includes('fade-in') && entry[0].isIntersecting) {
+          el.className += ' fade-in';
+        }
+      }
+    },
   },
 };
 </script>
@@ -136,6 +184,21 @@ export default {
 <style lang="scss">
 @import "../assets/scss/classes";
   .homepage {
+    .fade-in {
+      opacity: 1;
+      animation-name: fadeInOpacity;
+      animation-iteration-count: 1;
+      animation-timing-function: ease-in;
+      animation-duration: 1.5s;
+    }
+    @keyframes fadeInOpacity {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
     box-sizing: border-box;
     grid-area: main;
     &--landing {
@@ -144,21 +207,6 @@ export default {
       &--texts {
         opacity: 0;
         margin-left: 10vw;
-        &.fade-in {
-          opacity: 1;
-          animation-name: fadeInOpacity;
-          animation-iteration-count: 1;
-          animation-timing-function: ease-in;
-          animation-duration: 2s;
-        }
-        @keyframes fadeInOpacity {
-          0% {
-            opacity: 0;
-          }
-          100% {
-            opacity: 1;
-          }
-        }
 
         .name , .description {
           font-size: 2rem;
@@ -187,7 +235,9 @@ export default {
     &--about {
       color: #258def;
       height: 100%;
+      margin-top: 1px;
       &--texts {
+        opacity: 0;
         display: flex;
       }
       .about {
@@ -205,6 +255,9 @@ export default {
     }
     &--experience {
       background: linear-gradient(to bottom, #007CE9 0%, #70BBFC 100%);
+      &--texts {
+        opacity: 0;
+      }
 
       .work-exp {
         &:nth-child(n+2) {
@@ -226,10 +279,16 @@ export default {
       }
     }
     &--skillset {
+
+      &--texts {
+        opacity: 0;
+      }
+
       .desc {
         display: flex;
         flex-wrap: wrap;
       }
+
       .skill {
         display: flex;
         justify-content: center;
@@ -242,6 +301,9 @@ export default {
       }
     }
     &--education {
+      &--texts {
+        opacity: 0;
+      }
       background: linear-gradient(to bottom, #007CE9 0%, #70BBFC 100%);
       .education-desc {
           padding-bottom: 1rem;
@@ -254,6 +316,9 @@ export default {
     // }
     &--social-media {
       //background: linear-gradient(to bottom, #007CE9 0%, #70BBFC 100%);
+      &--texts {
+        opacity: 0;
+      }
       .social-icon {
         font-size: 3rem;
         margin-right: 1rem;

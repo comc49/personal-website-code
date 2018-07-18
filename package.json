@@ -14,6 +14,7 @@
     "deploy": "node ./node_modules/vue-gh-pages/index.js"
   },
   "dependencies": {
+    "d3": "^5.5.0",
     "material-design-icons": "^3.0.1",
     "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7",
